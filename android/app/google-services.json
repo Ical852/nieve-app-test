@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "18719663915",
+    "project_id": "nieveapptest",
+    "storage_bucket": "nieveapptest.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:18719663915:android:9731feae72c184c1ec476e",
+        "android_client_info": {
+          "package_name": "com.example.nieveapptest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "18719663915-vklfddpulg9g2k79a9unc1opehaobntn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmQeKdVCNtqS8KBs7XcoHfzb-Ly71btHg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "18719663915-vklfddpulg9g2k79a9unc1opehaobntn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
