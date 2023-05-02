@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nieveapptest/functions/global_func.dart';
+import 'package:nieveapptest/shared/constants.dart';
+import 'package:nieveapptest/view_models/user_view_model.dart';
 import 'package:nieveapptest/widgets/buttons/main_button_custom.dart';
 import 'package:nieveapptest/widgets/headers/stack_header.dart';
 import 'package:nieveapptest/widgets/image_contents/image_custom.dart';
@@ -10,20 +13,33 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  late var userVm = UserViewModel(context);
   TextEditingController emailController = TextEditingController(text: "");
   TextEditingController passwordController = TextEditingController(text: "");
 
   void goToSignUp() {
     Navigator.pushNamed(context, "/sign-up");
   }
-
-  void signIn() {
-    Navigator.pushNamedAndRemoveUntil(context, "/profile", (route) => false);
+  void onSignIn() async {
+    if (isDisabled()) {
+      showGLobalAlert("danger", "Complete your form first!", context);
+    } else {
+      var result = await userVm.signIn(
+        email: emailController.text, password: passwordController.text
+      );
+      if (result) {
+        Navigator.pushNamedAndRemoveUntil(context, "/profile", (route) => false);
+      }
+    }
+  }
+  bool isDisabled() {
+    return emailController.text == "" || passwordController.text == "";
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: white,
       body: SafeArea(
         child: Container(
           child: Column(
@@ -35,10 +51,7 @@ class _SignInPageState extends State<SignInPage> {
 
               Expanded(
                 child: ListView(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: 32,
-                    vertical: 32
-                  ),
+                  padding: EdgeInsets.all(32),
                   children: [
                     ImageCustom(
                       width: 250,
@@ -63,7 +76,7 @@ class _SignInPageState extends State<SignInPage> {
 
                     MainButtonCustom(
                       title: "Sign In",
-                      onPressed: signIn,
+                      onPressed: onSignIn,
                     ),
                     SizedBox(height: 16,),
                     MainButtonCustom(

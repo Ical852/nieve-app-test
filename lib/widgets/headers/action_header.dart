@@ -42,11 +42,11 @@ class ActionHeader extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Sign Up",
+                title,
                 style: megaBlackSemibold,
               ),
               Text(
-                "sign up and start to buy shoes",
+                desc,
                 style: regularGrayLight,
               )
             ],

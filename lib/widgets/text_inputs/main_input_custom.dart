@@ -30,7 +30,7 @@ class MainInputCustom extends StatelessWidget {
             height: 6,
           ),
           Opacity(
-            opacity: enabled ? 1 : 0.7,
+            opacity: enabled ? 1 : 0.5,
             child: TextFormField(
               enabled: enabled,
               onChanged: onChanged,

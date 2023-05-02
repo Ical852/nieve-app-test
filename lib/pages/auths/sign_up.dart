@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:nieveapptest/functions/global_func.dart';
+import 'package:nieveapptest/shared/constants.dart';
+import 'package:nieveapptest/view_models/user_view_model.dart';
 import 'package:nieveapptest/widgets/buttons/main_button_custom.dart';
 import 'package:nieveapptest/widgets/headers/action_header.dart';
 import 'package:nieveapptest/widgets/image_contents/image_custom.dart';
@@ -10,14 +13,38 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  late var userVm = UserViewModel(context);
   TextEditingController fullNameController = TextEditingController(text: "");
   TextEditingController emailController = TextEditingController(text: "");
   TextEditingController phoneNumberController = TextEditingController(text: "");
   TextEditingController passwordController = TextEditingController(text: "");
 
+  void onSignUp() async {
+    if (isDisabled()) {
+      showGLobalAlert('danger', 'Complete your form first!', context);
+    } else {
+      var result = await userVm.signUp(
+        email: emailController.text,
+        password: passwordController.text,
+        fullName: fullNameController.text,
+        phoneNumber: phoneNumberController.text
+      );
+      if (result) {
+        Navigator.pushNamedAndRemoveUntil(context, "/profile", (route) => false);
+      }
+    }
+  }
+  bool isDisabled() {
+    return fullNameController.text == "" ||
+      emailController.text == "" ||
+      phoneNumberController.text == "" ||
+      passwordController.text == "";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: white,
       body: SafeArea(
         child: Container(
           child: Column(
@@ -29,10 +56,7 @@ class _SignUpPageState extends State<SignUpPage> {
           
               Expanded(
                 child: ListView(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 32,
-                    horizontal: 32
-                  ),
+                  padding: EdgeInsets.all(32),
                   children: [
                     ImageCustom(
                       height: 250,
@@ -57,6 +81,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       controller: phoneNumberController,
                       hint: "Masukkan Phone Number",
                       title: "Phone Number",
+                      inputType: TextInputType.number,
                     ),
                     SizedBox(height: 20,),
                     MainInputCustom(
@@ -69,7 +94,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
                     MainButtonCustom(
                       title: "Sign Up",
-                      onPressed: () {},
+                      onPressed: onSignUp,
                     ),
                   ],
                 ),

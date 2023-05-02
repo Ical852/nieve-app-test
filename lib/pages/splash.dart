@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:nieveapptest/services/auth_service.dart';
 import 'package:nieveapptest/shared/constants.dart';
 import 'package:nieveapptest/shared/textstyle.dart';
+import 'package:nieveapptest/view_models/user_view_model.dart';
 import 'package:nieveapptest/widgets/image_contents/image_custom.dart';
 
 class SplashPage extends StatefulWidget {
@@ -11,14 +13,24 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  late var userVm = UserViewModel(context);
+
+  void navigate(bool isLoggedIn) async {
+    if (isLoggedIn) {
+      await userVm.fetchUser();
+    }
+
+    Timer(Duration(seconds: 2), () {
+      Navigator.pushNamedAndRemoveUntil(
+        context, isLoggedIn ? "/profile" : "/sign-in", (route) => false
+      );
+    });
+  }
+
   @override
   void initState() {
     super.initState();
-    Timer(Duration(seconds: 2), () {
-      Navigator.pushNamedAndRemoveUntil(
-        context, "/sign-in", (route) => false
-      );
-    });
+    navigate(userVm.getUserData() != null);
   }
 
   @override
